@@ -1,0 +1,79 @@
+<!-- CVS Header
+   $Id$
+   $Log$
+   Revision 1.1  2005/04/03 14:23:25  seanskye
+   Initial import of code tree into module on SF.
+
+-->
+<project name="Guanxi::WAYF" default="all">
+  <!-- CLASSPATH files -->
+  <property name="lib.dir" value="../lib" />                 <!-- Non distribution JARs -->
+  <property name="webinf.lib.dir" value="WEB-INF/lib" />  <!-- JARs for distribution -->
+
+  <!-- Source files -->
+  <property name="src.dir" value="src" />
+  <property name="jsp.dir" value="resources" />
+
+  <!-- Distribution directories -->
+  <property name="dist.dir" value="dist" />
+  <property name="webapp.dir" value="${dist.dir}/webapp" />
+  <property name="webapp.classes.dir" value="${webapp.dir}/WEB-INF/classes" />
+  <property name="deploy.dir" value="/WWW/wayf" />
+
+  <!-- CLASSPATH -->
+  <path id="classpath">
+    <fileset dir="${lib.dir}">
+      <include name="**/*.jar" />
+    </fileset>
+    <fileset dir="${webinf.lib.dir}">
+      <include name="**/*.jar" />
+    </fileset>
+  </path>
+
+  <!-- Prepare the directories for building and distribution -->
+  <target name="clean" description="Prepares directory structure for the build">
+    <delete dir="${dist.dir}"/>
+    <mkdir dir="${dist.dir}"/>
+    <mkdir dir="${webapp.dir}"/>
+    <mkdir dir="${webapp.classes.dir}"/>
+  </target>
+
+  <target name="deleteDeployDir" description="Deletes the deploy directory">
+    <delete dir="${deploy.dir}"/>
+  </target>
+
+  <!-- Compile -->
+  <target name="compile" description="Compiles the classes">
+    <javac srcdir="${src.dir}" destdir="${webapp.classes.dir}" deprecation="on" debug="true">
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <!-- Build a webapp -->
+  <target name="webapp" description="Builds a webapp tree">
+    <!-- web.xml -->
+    <copy todir="${webapp.dir}/WEB-INF">
+      <fileset dir="WEB-INF">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+
+    <!-- JSP -->
+    <copy todir="${webapp.dir}">
+      <fileset dir="${jsp.dir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="deploy" description="Copy webapp files to Apache tree">
+    <copy todir="${deploy.dir}">
+      <fileset dir="${webapp.dir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <!-- Default target - builds everything -->
+  <target name="all" depends="clean,compile,webapp,deploy" description="Builds everything into the distribution directory"/>
+</project>
