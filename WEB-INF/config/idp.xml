@@ -1,4 +1,0 @@
-<!-- This is the list of IdPs we know about -->
-<idp-list>
-  <idp name="UHI Millennium Institute" url="https://shorigin.uhi.ac.uk/SSO" />
-</idp-list>
