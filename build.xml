@@ -1,14 +1,23 @@
 <!-- CVS Header
    $Id$
    $Log$
+   Revision 1.2  2005/04/15 16:15:28  alistairskye
+   Dependencies on Guanxi::Common, SAMUEL and gx_lib moved to build.properties
+
    Revision 1.1  2005/04/03 14:23:25  seanskye
    Initial import of code tree into module on SF.
 
 -->
 <project name="Guanxi::WAYF" default="all">
+  <property file="build.properties" />
+
+  <!-- We need SAMUEL and Guanxi::Common to build the WAYF. Get these from build.properties -->
+  <property name="guanxi-common.lib.dir" value="${guanxi-common.home}/dist/jar" />
+  <property name="samuel.lib.dir" value="${samuel.home}/dist/jar" />
+  <property name="gx_lib.dir" value="${gx_lib.home}" />
+
   <!-- CLASSPATH files -->
-  <property name="lib.dir" value="../lib" />                 <!-- Non distribution JARs -->
-  <property name="webinf.lib.dir" value="WEB-INF/lib" />  <!-- JARs for distribution -->
+  <property name="webinf.lib.dir" value="WEB-INF/lib" />
 
   <!-- Source files -->
   <property name="src.dir" value="src" />
@@ -22,7 +31,13 @@
 
   <!-- CLASSPATH -->
   <path id="classpath">
-    <fileset dir="${lib.dir}">
+    <fileset dir="${gx_lib.dir}">
+      <include name="**/*.jar" />
+    </fileset>
+    <fileset dir="${guanxi-common.lib.dir}">
+      <include name="**/*.jar" />
+    </fileset>
+    <fileset dir="${samuel.lib.dir}">
       <include name="**/*.jar" />
     </fileset>
     <fileset dir="${webinf.lib.dir}">
