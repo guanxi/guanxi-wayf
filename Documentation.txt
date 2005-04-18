@@ -7,6 +7,7 @@ Contents
 1) What is Guanxi::WAYF?
 2) How do I install it?
 3) How do I configure it?
+4) Contributors
 
 What is Guanxi::WAYF?
 =====================
@@ -43,4 +44,11 @@ How do I configure it?
 Once you've got the WAYF installed, you must give it a list of IdPs to display. You do this by editing WEB-INF/config/wayf.xml:
 <idp name="UHI Millennium Institute" url="https://shorigin.uhi.ac.uk/SSO" />
 The "name" element is displayed to the user, while the "url" element is used to route the Shibboleth GET request to the correct IdP.
+
+Contributors
+============
+Alistair Young Lead developer alistair@smo.uhi.ac.uk
+Antony Corfield antony@smo.uhi.ac.uk
+Sean Mehan sean@smo.uhi.ac.uk
+
 
