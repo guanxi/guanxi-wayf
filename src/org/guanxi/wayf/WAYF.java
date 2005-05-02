@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.3  2005/05/02 10:58:13  alistairskye
+   Changed to use latest version of org.Guanxi.SAMUEL.Utils.XUtils.getIterator()
+
    Revision 1.2  2005/04/15 10:05:56  alistairskye
    License updated
 
@@ -125,7 +128,7 @@ public class WAYF extends HttpServlet {
     // Build up the list of IdPs we recognise
     XUtils xUtils = XUtils.getInstance();
     Element idpElement = null;
-    NodeIterator ni = xUtils.getIterator(sitesDoc, "", sitesDoc.getDocumentElement(), "idp");
+    NodeIterator ni = xUtils.getIterator(sitesDoc.getDocumentElement(), "", sitesDoc.getDocumentElement(), "idp");
     while ((idpElement = (Element)ni.nextNode()) != null) {
       NamedNodeMap idpAttrs = idpElement.getAttributes();
       sites.put(idpAttrs.getNamedItem("name").getNodeValue(), idpAttrs.getNamedItem("url").getNodeValue());
