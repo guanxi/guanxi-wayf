@@ -12,7 +12,7 @@
     <!-- Where the sites file is stored -->
     <init-param>
       <param-name>sitesFile</param-name>
-      <param-value>/WEB-INF/config/idp.xml</param-value>
+      <param-value>/WEB-INF/config/wayf.xml</param-value>
     </init-param>
   </servlet>
 
