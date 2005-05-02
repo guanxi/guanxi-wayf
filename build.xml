@@ -1,6 +1,11 @@
 <!-- CVS Header
    $Id$
    $Log$
+   Revision 1.3  2005/05/02 10:59:46  alistairskye
+   Added /images directory
+   Now copies samuel.jar and guanxi_common.jar to WEB-INF/lib
+   Now copied wayf.jar to WEB-INF/lib instead of using the WEB-INF/classes
+
    Revision 1.2  2005/04/15 16:15:28  alistairskye
    Dependencies on Guanxi::Common, SAMUEL and gx_lib moved to build.properties
 
@@ -21,12 +26,15 @@
 
   <!-- Source files -->
   <property name="src.dir" value="src" />
-  <property name="jsp.dir" value="resources" />
+  <property name="resources.dir" value="resources" />
+
+  <!-- JAR file to build -->
+  <property name="jar.file" value="wayf.jar" />
 
   <!-- Distribution directories -->
   <property name="dist.dir" value="dist" />
   <property name="webapp.dir" value="${dist.dir}/webapp" />
-  <property name="webapp.classes.dir" value="${webapp.dir}/WEB-INF/classes" />
+  <property name="classes.dir" value="classes" />
   <property name="deploy.dir" value="/WWW/wayf" />
 
   <!-- CLASSPATH -->
@@ -50,7 +58,7 @@
     <delete dir="${dist.dir}"/>
     <mkdir dir="${dist.dir}"/>
     <mkdir dir="${webapp.dir}"/>
-    <mkdir dir="${webapp.classes.dir}"/>
+    <mkdir dir="${classes.dir}"/>
   </target>
 
   <target name="deleteDeployDir" description="Deletes the deploy directory">
@@ -59,9 +67,15 @@
 
   <!-- Compile -->
   <target name="compile" description="Compiles the classes">
-    <javac srcdir="${src.dir}" destdir="${webapp.classes.dir}" deprecation="on" debug="true">
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" deprecation="on" debug="true">
       <classpath refid="classpath"/>
     </javac>
+  </target>
+
+  <!-- JAR -->
+  <target name="jar" depends="compile" description="Builds a JAR file">
+    <jar jarfile="${webapp.dir}/WEB-INF/lib/${jar.file}" basedir="${classes.dir}"/>
+    <delete dir="${classes.dir}"/>
   </target>
 
   <!-- Build a webapp -->
@@ -73,22 +87,28 @@
       </fileset>
     </copy>
 
-    <!-- JSP -->
+    <!-- JSP and images -->
     <copy todir="${webapp.dir}">
-      <fileset dir="${jsp.dir}">
+      <fileset dir="${resources.dir}">
         <include name="**/*.*"/>
       </fileset>
     </copy>
-  </target>
 
-  <target name="deploy" description="Copy webapp files to Apache tree">
-    <copy todir="${deploy.dir}">
-      <fileset dir="${webapp.dir}">
+    <!-- SAMUEL -->
+    <copy todir="${webapp.dir}/WEB-INF/lib">
+      <fileset dir="${samuel.lib.dir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+
+    <!-- Guanxi::Common -->
+    <copy todir="${webapp.dir}/WEB-INF/lib">
+      <fileset dir="${guanxi-common.lib.dir}">
         <include name="**/*.*"/>
       </fileset>
     </copy>
   </target>
 
   <!-- Default target - builds everything -->
-  <target name="all" depends="clean,compile,webapp,deploy" description="Builds everything into the distribution directory"/>
+  <target name="all" depends="clean,compile,webapp,jar" description="Builds everything into the distribution directory"/>
 </project>
