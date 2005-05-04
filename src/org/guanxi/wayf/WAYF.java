@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.4  2005/05/04 13:16:36  alistairskye
+   Changed to use org.Guanxi.SAMUEL.Exception package
+
    Revision 1.3  2005/05/02 10:58:13  alistairskye
    Changed to use latest version of org.Guanxi.SAMUEL.Utils.XUtils.getIterator()
 
@@ -29,8 +32,8 @@ package org.Guanxi.WAYF;
 
 import org.Guanxi.Common.Utils;
 import org.Guanxi.SAMUEL.Utils.ParserPool;
-import org.Guanxi.SAMUEL.Utils.ParserPoolException;
-import org.Guanxi.SAMUEL.Utils.ParseException;
+import org.Guanxi.SAMUEL.Exception.ParserPoolException;
+import org.Guanxi.SAMUEL.Exception.ParseException;
 import org.Guanxi.SAMUEL.Utils.XUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
