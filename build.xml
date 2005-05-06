@@ -1,6 +1,9 @@
 <!-- CVS Header
    $Id$
    $Log$
+   Revision 1.6  2005/05/06 08:54:38  alistairskye
+   Changed jar.file to guanxi-wayf.jar
+
    Revision 1.5  2005/05/04 15:14:12  alistairskye
    Added servlet-api-jar to classpath
 
@@ -28,7 +31,7 @@
   <property name="resources.dir" value="resources" />
 
   <!-- JAR file to build -->
-  <property name="jar.file" value="wayf.jar" />
+  <property name="jar.file" value="guanxi-wayf.jar" />
 
   <!-- Distribution directories -->
   <property name="dist.dir" value="dist" />
