@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.5  2005/05/23 08:41:04  alistairskye
+   Updated buildIDPList() to fix idp-list display bug
+
    Revision 1.4  2005/05/04 13:16:36  alistairskye
    Changed to use org.Guanxi.SAMUEL.Exception package
 
@@ -131,7 +134,7 @@ public class WAYF extends HttpServlet {
     // Build up the list of IdPs we recognise
     XUtils xUtils = XUtils.getInstance();
     Element idpElement = null;
-    NodeIterator ni = xUtils.getIterator(sitesDoc.getDocumentElement(), "", sitesDoc.getDocumentElement(), "idp");
+    NodeIterator ni = xUtils.getIterator(sitesDoc.getDocumentElement(), "", sitesDoc.getDocumentElement(), "idp-list");
     while ((idpElement = (Element)ni.nextNode()) != null) {
       NamedNodeMap idpAttrs = idpElement.getAttributes();
       sites.put(idpAttrs.getNamedItem("name").getNodeValue(), idpAttrs.getNamedItem("url").getNodeValue());
