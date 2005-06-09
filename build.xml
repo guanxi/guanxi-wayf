@@ -1,6 +1,9 @@
 <!-- CVS Header
    $Id$
    $Log$
+   Revision 1.7  2005/06/09 13:07:28  alistairskye
+   Added xalan-2.4.1.jar
+
    Revision 1.6  2005/05/06 08:54:38  alistairskye
    Changed jar.file to guanxi-wayf.jar
 
@@ -93,7 +96,10 @@
     <copy todir="${webapp.dir}/WEB-INF/lib">
       <fileset dir="${samuel.lib.dir}"><include name="**/*.*"/></fileset>
       <fileset dir="${guanxi-common.lib.dir}"><include name="**/*.*"/></fileset>
-      <fileset dir="${gx_lib.dir}"><include name="xmlsec.jar"/></fileset>
+      <fileset dir="${gx_lib.dir}">
+        <include name="xmlsec.jar"/>
+        <include name="xalan-2.4.1.jar"/>
+      </fileset>
     </copy>
   </target>
 
