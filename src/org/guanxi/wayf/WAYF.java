@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.7  2005/06/10 10:39:05  alistairskye
+   Modified buildIDPList to use ParserPoolException
+
    Revision 1.6  2005/05/23 11:38:38  alistairskye
    Changed buildIDPList to look for idp nodes
 
@@ -129,7 +132,7 @@ public class WAYF extends HttpServlet {
     try {
       sitesDoc = parser.parse(new File(sitesFile));
     }
-    catch(ParseException pe) {
+    catch(ParserPoolException pe) {
       sites.put("error", pe.getMessage());
       return sites;
     }
