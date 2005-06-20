@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.8  2005/06/20 11:16:51  alistairskye
+   Removed org.Guanxi.SAMUEL.Exception.ParseException
+
    Revision 1.7  2005/06/10 10:39:05  alistairskye
    Modified buildIDPList to use ParserPoolException
 
@@ -42,7 +45,6 @@ package org.Guanxi.WAYF;
 import org.Guanxi.Common.Utils;
 import org.Guanxi.SAMUEL.Utils.ParserPool;
 import org.Guanxi.SAMUEL.Exception.ParserPoolException;
-import org.Guanxi.SAMUEL.Exception.ParseException;
 import org.Guanxi.SAMUEL.Utils.XUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
