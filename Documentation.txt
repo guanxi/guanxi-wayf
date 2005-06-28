@@ -46,6 +46,9 @@ guanxi-common.home=../Common
 samuel.home=../../samuel
 gx_lib.home=../../gx_lib
 
+You'll have to tell the build where your servlet environment is:
+servlet-api-jar=/usr/local/tomcat/common/lib/servlet-api.jar
+
 then just type:
 ant
 
