@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.9  2005/07/11 12:05:56  alistairskye
+   Package restructure
+
    Revision 1.8  2005/06/20 11:16:51  alistairskye
    Removed org.Guanxi.SAMUEL.Exception.ParseException
 
@@ -40,12 +43,12 @@
 
 */
 
-package org.Guanxi.WAYF;
+package org.guanxi.wayf;
 
-import org.Guanxi.Common.Utils;
-import org.Guanxi.SAMUEL.Utils.ParserPool;
-import org.Guanxi.SAMUEL.Exception.ParserPoolException;
-import org.Guanxi.SAMUEL.Utils.XUtils;
+import org.guanxi.common.Utils;
+import org.guanxi.samuel.utils.ParserPool;
+import org.guanxi.samuel.exception.ParserPoolException;
+import org.guanxi.samuel.utils.XUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;

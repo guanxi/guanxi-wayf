@@ -1,6 +1,6 @@
 <%@ page import="java.util.Hashtable,
                  java.util.Enumeration,
-                 org.Guanxi.Common.Utils"%>
+                 org.guanxi.common.Utils"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page autoFlush="false" buffer="20kb" %>
 <html>
@@ -47,7 +47,7 @@
     <input type="submit" name="submit" value="Authenticate" />
       <%
         String name,value;
-        Hashtable shibbolethParams = org.Guanxi.Common.Utils.getRequestParameters(request);
+        Hashtable shibbolethParams = org.guanxi.common.Utils.getRequestParameters(request);
         Enumeration e = shibbolethParams.keys();
         while (e.hasMoreElements()) {
           name = (String)e.nextElement();

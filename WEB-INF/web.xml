@@ -7,7 +7,7 @@
   <servlet>
     <servlet-name>WAYF</servlet-name>
     <display-name>Guanxi WAYF Service</display-name>
-    <servlet-class>org.Guanxi.WAYF.WAYF</servlet-class>
+    <servlet-class>org.guanxi.wayf.WAYF</servlet-class>
 
     <!-- Where the sites file is stored -->
     <init-param>
