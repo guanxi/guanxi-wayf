@@ -1,4 +1,6 @@
 <!-- This is the list of IdPs we know about -->
-<idp-list>
+<idp-list xmlns="urn:guanxi:idp"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="urn:guanxi:idp guanxi-idp.xsd">
   <idp name="UHI Millennium Institute" url="https://shorigin.uhi.ac.uk/SSO" />
 </idp-list>
