@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.10  2005/07/19 14:21:33  alistairskye
+   Modified buildIDPList() to use new namespace aware org.guanxi.samuel.utils.XUtils
+
    Revision 1.9  2005/07/11 12:05:56  alistairskye
    Package restructure
 
@@ -46,6 +49,7 @@
 package org.guanxi.wayf;
 
 import org.guanxi.common.Utils;
+import org.guanxi.common.definitions.Guanxi;
 import org.guanxi.samuel.utils.ParserPool;
 import org.guanxi.samuel.exception.ParserPoolException;
 import org.guanxi.samuel.utils.XUtils;
@@ -145,7 +149,7 @@ public class WAYF extends HttpServlet {
     // Build up the list of IdPs we recognise
     XUtils xUtils = XUtils.getInstance();
     Element idpElement = null;
-    NodeIterator ni = xUtils.getIterator(sitesDoc.getDocumentElement(), null, sitesDoc.getDocumentElement(), "idp");
+    NodeIterator ni = xUtils.getIterator(sitesDoc.getDocumentElement(), Guanxi.NS_IDP_NAME_IDENTIFIER, "idp");
     while ((idpElement = (Element)ni.nextNode()) != null) {
       NamedNodeMap idpAttrs = idpElement.getAttributes();
       sites.put(idpAttrs.getNamedItem("name").getNodeValue(), idpAttrs.getNamedItem("url").getNodeValue());
