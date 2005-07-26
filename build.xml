@@ -1,6 +1,9 @@
 <!-- CVS Header
    $Id$
    $Log$
+   Revision 1.8  2005/07/26 13:48:37  alistairskye
+   Updated to copy xsd
+
    Revision 1.7  2005/06/09 13:07:28  alistairskye
    Added xalan-2.4.1.jar
 
@@ -32,6 +35,7 @@
   <!-- Source files -->
   <property name="src.dir" value="src" />
   <property name="resources.dir" value="resources" />
+  <property name="xsd.dir" value="../IdP/xsd" />
 
   <!-- JAR file to build -->
   <property name="jar.file" value="guanxi-wayf.jar" />
@@ -68,6 +72,9 @@
     <javac srcdir="${src.dir}" destdir="${classes.dir}" deprecation="on" debug="true">
       <classpath refid="classpath"/>
     </javac>
+    <copy todir="${classes.dir}/xsd">
+      <fileset dir="${xsd.dir}"/>
+    </copy>
   </target>
 
   <!-- JAR -->
