@@ -2,8 +2,8 @@ Guanxi::WAYF - ReadMe
 =====================
 A Java application implementing simple Where Are You From functionality for a Shibboleth compliant Service Provider
 
-Version 1.2
--------------------
+Version 1.2.4
+-------------
 http://www.guanxi.uhi.ac.uk/
 
 Copyright (C) 2005 SMO WWW Dev Group
