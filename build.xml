@@ -1,6 +1,9 @@
 <!-- CVS Header
    $Id$
    $Log$
+   Revision 1.9  2005/10/22 14:53:18  alistairskye
+   Now gets the XML schema files from the root module
+
    Revision 1.8  2005/07/26 13:48:37  alistairskye
    Updated to copy xsd
 
@@ -35,7 +38,7 @@
   <!-- Source files -->
   <property name="src.dir" value="src" />
   <property name="resources.dir" value="resources" />
-  <property name="xsd.dir" value="../IdP/xsd" />
+  <property name="xsd.dir" value="../xsd" />
 
   <!-- JAR file to build -->
   <property name="jar.file" value="guanxi-wayf.jar" />
