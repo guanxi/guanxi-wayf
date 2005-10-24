@@ -1,32 +1,3 @@
-<!-- CVS Header
-   $Id$
-   $Log$
-   Revision 1.9  2005/10/22 14:53:18  alistairskye
-   Now gets the XML schema files from the root module
-
-   Revision 1.8  2005/07/26 13:48:37  alistairskye
-   Updated to copy xsd
-
-   Revision 1.7  2005/06/09 13:07:28  alistairskye
-   Added xalan-2.4.1.jar
-
-   Revision 1.6  2005/05/06 08:54:38  alistairskye
-   Changed jar.file to guanxi-wayf.jar
-
-   Revision 1.5  2005/05/04 15:14:12  alistairskye
-   Added servlet-api-jar to classpath
-
-   Revision 1.4  2005/05/04 12:07:03  alistairskye
-   Tidied up jar copying in webapp task.
-   Removed deploy task
-
-   Revision 1.2  2005/04/15 16:15:28  alistairskye
-   Dependencies on Guanxi::Common, SAMUEL and gx_lib moved to build.properties
-
-   Revision 1.1  2005/04/03 14:23:25  seanskye
-   Initial import of code tree into module on SF.
-
--->
 <project name="Guanxi::WAYF" default="all">
   <property file="build.properties" />
 
@@ -38,7 +9,10 @@
   <!-- Source files -->
   <property name="src.dir" value="src" />
   <property name="resources.dir" value="resources" />
-  <property name="xsd.dir" value="../xsd" />
+  <property name="xsd.src.dir" value="../xsd" />
+  <property name="xsd.dest.dir" value="xsd" />
+  <property name="messages.src.dir" value="../messages" />
+  <property name="messages.dest.dir" value="messages" />
 
   <!-- JAR file to build -->
   <property name="jar.file" value="guanxi-wayf.jar" />
@@ -75,8 +49,11 @@
     <javac srcdir="${src.dir}" destdir="${classes.dir}" deprecation="on" debug="true">
       <classpath refid="classpath"/>
     </javac>
-    <copy todir="${classes.dir}/xsd">
-      <fileset dir="${xsd.dir}"/>
+    <copy todir="${classes.dir}/${xsd.dest.dir}">
+      <fileset dir="${xsd.src.dir}"/>
+    </copy>
+    <copy todir="${classes.dir}/${messages.dest.dir}">
+      <fileset dir="${messages.src.dir}"/>
     </copy>
   </target>
 
