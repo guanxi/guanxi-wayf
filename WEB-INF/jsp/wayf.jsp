@@ -1,10 +1,16 @@
 <%@ page import="java.util.Hashtable,
                  java.util.Enumeration,
                  org.guanxi.common.Utils"%>
+<%@ page import="java.util.Locale"%>
+<%@ page import="java.util.ResourceBundle"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page autoFlush="false" buffer="20kb" %>
+<%
+  ResourceBundle msg = ResourceBundle.getBundle("messages.wayf_wayf", new Locale(request.getHeader("Accept-Language")));
+  ResourceBundle siteMsg = ResourceBundle.getBundle("messages.site", new Locale(request.getHeader("Accept-Language")));
+%>
 <html>
-  <head><title>Guanxi WAYF Service</title>
+  <head><title><%= msg.getString("ID_PAGE_TITLE")%></title>
     <style type="text/css">
       <!--
       body {
@@ -24,7 +30,7 @@
  <br>
 
  <div style="margin: 0 auto; text-align: center; width:400px; height:80px;">
-  To access <strong><%= request.getParameter("target") %></strong> please choose your home institution
+  <%= msg.getString("ID_CHOOSE_INSTITUTION")%>
  </div>
 
   <div style="border:1px solid black; width:400px; height:65; background-image:url(images/formback.gif); background-repeat:repeat-x; margin: 0 auto; text-align: center;">
@@ -44,7 +50,7 @@
       }
     %>
     </select>
-    <input type="submit" name="submit" value="Authenticate" />
+    <input type="submit" name="submit" value="<%= msg.getString("ID_BUTTON_PROCEED")%>" />
       <%
         String name,value;
         Hashtable shibbolethParams = org.guanxi.common.Utils.getRequestParameters(request);
@@ -61,5 +67,8 @@
       </form>
       </div>
       </div>
+     <div style="width:400px; margin: 0 auto;">
+       <div align="left"><strong>Guanxi@<%= siteMsg.getString("ID_INSTITUTION")%></strong></div>
+     </div>
   </body>
 </html>

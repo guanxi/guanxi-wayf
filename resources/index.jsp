@@ -1,6 +1,12 @@
+<%@ page import="java.util.Locale"%>
+<%@ page import="java.util.ResourceBundle"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+  ResourceBundle msg = ResourceBundle.getBundle("messages.wayf_index", new Locale(request.getHeader("Accept-Language")));
+  ResourceBundle siteMsg = ResourceBundle.getBundle("messages.site", new Locale(request.getHeader("Accept-Language")));
+%>
 <html>
-  <head><title>Guanxi WAYF Service</title>
+  <head><title><%= msg.getString("ID_PAGE_TITLE")%></title>
     <style type="text/css">
       <!--
       body {
@@ -18,13 +24,13 @@
   <body>
     <div style="width:167; height:91; margin: 0 auto; background-image:url(images/logo.gif);"></div>
     <br>
-    <div style="border:1px solid black; width:400px; height:75; background-image:url(images/formback.gif); background-repeat:repeat-x; margin: 0 auto; text-align: center;">
+    <div style="border:1px solid black; width:30%; height:20%; background-image:url(images/formback.gif); background-repeat:repeat-x; margin: 0 auto; text-align: center;">
     <div style="padding:20px; margin: 0 auto;">
-    This is the UHI Millennium Institute WAYF service.
+    <%= msg.getString("ID_WAYF_INFO")%>
     </div>
     </div>
     <div style="width:400px; margin: 0 auto;">
-      <div align="right"><strong>Guanxi@UHI</strong></div>
+      <div align="left"><strong>Guanxi@<%= siteMsg.getString("ID_INSTITUTION")%></strong></div>
     </div>
   </body>
 </html>
