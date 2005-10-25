@@ -24,12 +24,12 @@
   <body>
     <div style="width:167; height:91; margin: 0 auto; background-image:url(images/logo.gif);"></div>
     <br>
-    <div style="border:1px solid black; width:30%; height:20%; background-image:url(images/formback.gif); background-repeat:repeat-x; margin: 0 auto; text-align: center;">
+    <div style="border:1px solid black; width:30%; height:20%; background-image:url(images/formback.gif); background-repeat:repeat-x repeat-y; margin: 0 auto; text-align: center;">
     <div style="padding:20px; margin: 0 auto;">
     <%= msg.getString("ID_WAYF_INFO")%>
     </div>
     </div>
-    <div style="width:400px; margin: 0 auto;">
+    <div style="width:30%; margin: 0 auto;">
       <div align="left"><strong>Guanxi@<%= siteMsg.getString("ID_INSTITUTION")%></strong></div>
     </div>
   </body>
