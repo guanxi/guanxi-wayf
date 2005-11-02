@@ -33,7 +33,7 @@
   <%= msg.getString("ID_CHOOSE_INSTITUTION")%>
  </div>
 
-  <div style="border:1px solid black; width:400px; height:65; background-image:url(images/formback.gif); background-repeat:repeat-x; margin: 0 auto; text-align: center;">
+  <div style="border:1px solid black; width:400px; height:65; background-image:url(images/formback.gif); background-repeat:repeat-x repeat-y; margin: 0 auto; text-align: center;">
   <div style="padding:20px; margin: 0 auto;">
   <form name="wayfForm" method="GET" action="WAYF">
     <select name="idp">
