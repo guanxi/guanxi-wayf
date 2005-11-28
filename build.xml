@@ -39,6 +39,10 @@
   <!-- Prepare the directories for building and distribution -->
   <target name="clean" description="Prepares directory structure for the build">
     <delete dir="${dist.dir}"/>
+  </target>
+
+  <!-- Creates the directories required for building and distribution -->
+  <target name="initDistDirs">
     <mkdir dir="${dist.dir}"/>
     <mkdir dir="${webapp.dir}"/>
     <mkdir dir="${classes.dir}"/>
@@ -52,6 +56,17 @@
     <copy todir="${classes.dir}/${xsd.dest.dir}">
       <fileset dir="${xsd.src.dir}"/>
     </copy>
+    <copy todir="${classes.dir}/${messages.dest.dir}">
+      <fileset dir="${messages.src.dir}"/>
+    </copy>
+  </target>
+
+  <!-- Copies non class files to the classes directory if they need to be on the CLASSPATH -->
+  <target name="copyClasspathFiles">
+    <copy todir="${classes.dir}/${xsd.dest.dir}">
+      <fileset dir="${xsd.src.dir}"/>
+    </copy>
+
     <copy todir="${classes.dir}/${messages.dest.dir}">
       <fileset dir="${messages.src.dir}"/>
     </copy>
@@ -90,6 +105,12 @@
     </copy>
   </target>
 
+  <!-- Builds the Guanxi components that the WAYF requires -->
+  <target name="buildDependencies">
+    <ant antfile="build.xml" dir="${samuel.home}" target="all"/>
+    <ant antfile="build.xml" dir="${guanxi-common.home}" target="all"/>
+  </target>
+
   <!-- Default target - builds everything -->
-  <target name="all" depends="clean,compile,webapp,jar" description="Builds everything into the distribution directory"/>
+  <target name="all" depends="clean,initDistDirs,buildDependencies,compile,copyClasspathFiles,webapp,jar" description="Builds everything into the distribution directory"/>
 </project>
