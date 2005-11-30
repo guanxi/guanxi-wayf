@@ -107,8 +107,8 @@
 
   <!-- Builds the Guanxi components that the WAYF requires -->
   <target name="buildDependencies">
-    <ant antfile="build.xml" dir="${samuel.home}" target="all"/>
-    <ant antfile="build.xml" dir="${guanxi-common.home}" target="all"/>
+    <ant antfile="build.xml" dir="${samuel.home}" target="all" inheritall="false" />
+    <ant antfile="build.xml" dir="${guanxi-common.home}" target="all" inheritall="false" />
   </target>
 
   <!-- Default target - builds everything -->
