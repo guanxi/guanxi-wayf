@@ -9,9 +9,7 @@
   <!-- Source files -->
   <property name="src.dir" value="src" />
   <property name="resources.dir" value="resources" />
-  <property name="xsd.src.dir" value="../xsd" />
   <property name="xsd.dest.dir" value="xsd" />
-  <property name="messages.src.dir" value="../messages" />
   <property name="messages.dest.dir" value="messages" />
 
   <!-- JAR file to build -->
@@ -54,21 +52,21 @@
       <classpath refid="classpath"/>
     </javac>
     <copy todir="${classes.dir}/${xsd.dest.dir}">
-      <fileset dir="${xsd.src.dir}"/>
+      <fileset dir="${xsd.dir}"/>
     </copy>
     <copy todir="${classes.dir}/${messages.dest.dir}">
-      <fileset dir="${messages.src.dir}"/>
+      <fileset dir="${messages.dir}"/>
     </copy>
   </target>
 
   <!-- Copies non class files to the classes directory if they need to be on the CLASSPATH -->
   <target name="copyClasspathFiles">
     <copy todir="${classes.dir}/${xsd.dest.dir}">
-      <fileset dir="${xsd.src.dir}"/>
+      <fileset dir="${xsd.dir}"/>
     </copy>
 
     <copy todir="${classes.dir}/${messages.dest.dir}">
-      <fileset dir="${messages.src.dir}"/>
+      <fileset dir="${messages.dir}"/>
     </copy>
   </target>
 
