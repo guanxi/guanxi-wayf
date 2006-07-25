@@ -98,7 +98,7 @@
       <fileset dir="${guanxi-common.lib.dir}"><include name="**/*.*"/></fileset>
       <fileset dir="${gx_lib.dir}">
         <include name="xmlsec.jar"/>
-        <include name="xalan-2.4.1.jar"/>
+        <include name="xalan.jar"/>
       </fileset>
     </copy>
   </target>
