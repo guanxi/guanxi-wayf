@@ -99,6 +99,7 @@
       <fileset dir="${gx_lib.dir}">
         <include name="xmlsec.jar"/>
         <include name="xalan.jar"/>
+        <include name="log4j.jar"/>
       </fileset>
     </copy>
   </target>
