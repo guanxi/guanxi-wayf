@@ -5,8 +5,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" >
   <servlet>
-    <servlet-name>WAYF</servlet-name>
     <display-name>Guanxi WAYF Service</display-name>
+    <servlet-name>WAYF</servlet-name>
     <servlet-class>org.guanxi.wayf.WAYF</servlet-class>
 
     <!-- Where the sites file is stored -->
