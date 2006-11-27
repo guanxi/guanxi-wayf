@@ -1,4 +1,10 @@
 <project name="Guanxi::WAYF" default="all">
+  <!-- Initialise TODAY, DSTAMP and TSTAMP -->
+  <tstamp>
+    <format property="TODAY" pattern="d MMMM yyyy" locale="en"/>
+    <format property="TSTAMP" pattern="hh:mm:ss" locale="en"/>
+  </tstamp>
+  
   <property file="build.properties" />
 
   <!-- We need SAMUEL and Guanxi::Common to build the WAYF. Get these from build.properties -->
@@ -13,7 +19,7 @@
   <property name="messages.dest.dir" value="messages" />
 
   <!-- JAR file to build -->
-  <property name="jar.file" value="guanxi-wayf.jar" />
+  <property name="jar.file" value="guanxi-wayf-${version}.jar" />
 
   <!-- Distribution directories -->
   <property name="dist.dir" value="dist" />
@@ -72,7 +78,15 @@
 
   <!-- JAR -->
   <target name="jar" depends="compile" description="Builds a JAR file">
-    <jar jarfile="${webapp.dir}/WEB-INF/lib/${jar.file}" basedir="${classes.dir}"/>
+    <jar jarfile="${webapp.dir}/WEB-INF/lib/${jar.file}" basedir="${classes.dir}">
+      <manifest>
+        <attribute name="Implementation-Vendor" value="${implementation-vendor}"/>
+        <attribute name="Implementation-Title" value="${module.name}"/>
+        <attribute name="Implementation-Version" value="${version}"/>
+        <attribute name="Implementation-Date" value="${TODAY} ${TSTAMP}"/>
+        <attribute name="Built-By" value="${user.name}"/>
+      </manifest>
+    </jar>
     <delete dir="${classes.dir}"/>
   </target>
 
