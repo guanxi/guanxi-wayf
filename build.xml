@@ -110,11 +110,9 @@
     <copy todir="${webapp.dir}/WEB-INF/lib">
       <fileset dir="${samuel.lib.dir}"><include name="**/*.*"/></fileset>
       <fileset dir="${guanxi-common.lib.dir}"><include name="**/*.*"/></fileset>
-      <fileset dir="${gx_lib.dir}">
-        <include name="xmlsec.jar"/>
-        <include name="xalan.jar"/>
-        <include name="log4j.jar"/>
-      </fileset>
+      <fileset dir="${gx_lib.dir}/xmlsec"><include name="**/*.*"/></fileset>
+      <fileset dir="${gx_lib.dir}/xalan"><include name="**/*.*"/></fileset>
+      <fileset dir="${gx_lib.dir}/log4j"><include name="**/*.*"/></fileset>
     </copy>
   </target>
 
