@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.13  2007/01/16 11:47:53  alistairskye
+   Updated buildIDPList() to remove GuanxiException
+
    Revision 1.12  2007/01/16 11:44:33  alistairskye
    Added getRequestParameters()
 
@@ -54,7 +57,6 @@
 
 package org.guanxi.wayf;
 
-import org.guanxi.common.GuanxiException;
 import org.guanxi.xal.idp.IdpListDocument;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -72,12 +74,7 @@ import java.util.Enumeration;
  */
 public class WAYF extends HttpServlet {
   public void init() throws ServletException {
-    try {
-      getServletContext().setAttribute("idpList", buildIDPList());
-    }
-    catch(GuanxiException ge) {
-      throw new ServletException(ge);
-    }
+    getServletContext().setAttribute("idpList", buildIDPList());
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -124,7 +121,7 @@ public class WAYF extends HttpServlet {
     }
   }
 
-  private Hashtable buildIDPList() throws GuanxiException {
+  private Hashtable buildIDPList() {
     Hashtable sites = new Hashtable();
 
     // Build the path to the sites XML file...
@@ -132,18 +129,18 @@ public class WAYF extends HttpServlet {
 
     IdpListDocument.IdpList idpList = null;
     try {
+      // Load the config file...
       IdpListDocument idpListDoc = IdpListDocument.Factory.parse(new File(sitesFile));
       idpList = idpListDoc.getIdpList();
+
+      // ...and build up the list of IdPs we recognise
+      for (int count = 0; count < idpList.getIdpArray().length; count++) {
+        org.guanxi.xal.idp.WAYF wayf = idpList.getIdpArray(count);
+        sites.put(wayf.getName(), wayf.getUrl());
+      }
     }
     catch(Exception e) {
       sites.put("error", e.getMessage());
-      throw new GuanxiException(e);
-    }
-
-    // Build up the list of IdPs we recognise
-    for (int count = 0; count < idpList.getIdpArray().length; count++) {
-      org.guanxi.xal.idp.WAYF wayf = idpList.getIdpArray(count);
-      sites.put(wayf.getName(), wayf.getUrl());
     }
 
     return sites;
