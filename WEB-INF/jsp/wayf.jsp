@@ -1,6 +1,5 @@
 <%@ page import="java.util.Hashtable,
-                 java.util.Enumeration,
-                 org.guanxi.common.Utils"%>
+                 java.util.Enumeration"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="java.util.ResourceBundle"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
