@@ -105,6 +105,7 @@
     <!-- Required jars -->
     <copy todir="${webapp.dir}/WEB-INF/lib">
       <fileset dir="${guanxi-common.lib.dir}"><include name="**/*.*"/></fileset>
+      <fileset dir="${gx_lib.dir}/xmlbeans"><include name="**/*.*"/></fileset>
       <fileset dir="${gx_lib.dir}/xmlsec"><include name="**/*.*"/></fileset>
       <fileset dir="${gx_lib.dir}/xalan"><include name="**/*.*"/></fileset>
       <fileset dir="${gx_lib.dir}/log4j"><include name="**/*.*"/></fileset>
