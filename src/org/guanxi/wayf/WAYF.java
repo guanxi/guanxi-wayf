@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.11  2007/01/16 11:31:16  alistairskye
+   Updated to use XMLBeans
+
    Revision 1.10  2005/07/19 14:21:33  alistairskye
    Modified buildIDPList() to use new namespace aware org.guanxi.samuel.utils.XUtils
 
@@ -49,14 +52,8 @@
 package org.guanxi.wayf;
 
 import org.guanxi.common.Utils;
-import org.guanxi.common.definitions.Guanxi;
-import org.guanxi.samuel.utils.ParserPool;
-import org.guanxi.samuel.exception.ParserPoolException;
-import org.guanxi.samuel.utils.XUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.traversal.NodeIterator;
+import org.guanxi.common.GuanxiException;
+import org.guanxi.xal.idp.IdpListDocument;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,12 +64,18 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 
 /**
- * <font size=5><b></b></font>
+ * <p>WAYF</p>
  *
  * @author Alistair Young alistair@smo.uhi.ac.uk
  */
 public class WAYF extends HttpServlet {
   public void init() throws ServletException {
+    try {
+      getServletContext().setAttribute("idpList", buildIDPList());
+    }
+    catch(GuanxiException ge) {
+      throw new ServletException(ge);
+    }
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,13 +83,12 @@ public class WAYF extends HttpServlet {
   }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    getServletContext().setAttribute("idpList", buildIDPList());
-
     // Are we getting a form submission from the WAYF list?
     if (request.getParameter("mode") != null) {
       if (request.getParameter("mode").equalsIgnoreCase("dispatch")) {
         // Base IdP URL...
         String idpURL = request.getParameter("idp");
+        
         // ...and add on the Shibboleth specific parameters
         String name, value;
         boolean firstShibbParam = true;
@@ -120,39 +122,26 @@ public class WAYF extends HttpServlet {
     }
   }
 
-  private Hashtable buildIDPList() {
+  private Hashtable buildIDPList() throws GuanxiException {
     Hashtable sites = new Hashtable();
-
-    // Get an XML parser from the pool
-    ParserPool parser = null;
-    try {
-      parser = ParserPool.getInstance();
-    }
-    catch(ParserPoolException ppe) {
-      sites.put("error", ppe.getMessage());
-      return sites;
-    }
 
     // Build the path to the sites XML file...
     String sitesFile = getServletContext().getRealPath(getServletConfig().getInitParameter("sitesFile"));
 
-    // ...and parse it
-    Document sitesDoc = null;
+    IdpListDocument.IdpList idpList = null;
     try {
-      sitesDoc = parser.parse(new File(sitesFile));
+      IdpListDocument idpListDoc = IdpListDocument.Factory.parse(new File(sitesFile));
+      idpList = idpListDoc.getIdpList();
     }
-    catch(ParserPoolException pe) {
-      sites.put("error", pe.getMessage());
-      return sites;
+    catch(Exception e) {
+      sites.put("error", e.getMessage());
+      throw new GuanxiException(e);
     }
 
     // Build up the list of IdPs we recognise
-    XUtils xUtils = XUtils.getInstance();
-    Element idpElement = null;
-    NodeIterator ni = xUtils.getIterator(sitesDoc.getDocumentElement(), Guanxi.NS_IDP_NAME_IDENTIFIER, "idp");
-    while ((idpElement = (Element)ni.nextNode()) != null) {
-      NamedNodeMap idpAttrs = idpElement.getAttributes();
-      sites.put(idpAttrs.getNamedItem("name").getNodeValue(), idpAttrs.getNamedItem("url").getNodeValue());
+    for (int count = 0; count < idpList.getIdpArray().length; count++) {
+      org.guanxi.xal.idp.WAYF wayf = idpList.getIdpArray(count);
+      sites.put(wayf.getName(), wayf.getUrl());
     }
 
     return sites;
