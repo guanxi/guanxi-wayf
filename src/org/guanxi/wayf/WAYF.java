@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.14  2007/01/16 11:48:18  alistairskye
+   Tidied up
+
    Revision 1.13  2007/01/16 11:47:53  alistairskye
    Updated buildIDPList() to remove GuanxiException
 
@@ -127,11 +130,10 @@ public class WAYF extends HttpServlet {
     // Build the path to the sites XML file...
     String sitesFile = getServletContext().getRealPath(getServletConfig().getInitParameter("sitesFile"));
 
-    IdpListDocument.IdpList idpList = null;
     try {
       // Load the config file...
       IdpListDocument idpListDoc = IdpListDocument.Factory.parse(new File(sitesFile));
-      idpList = idpListDoc.getIdpList();
+      IdpListDocument.IdpList idpList = idpListDoc.getIdpList();
 
       // ...and build up the list of IdPs we recognise
       for (int count = 0; count < idpList.getIdpArray().length; count++) {
