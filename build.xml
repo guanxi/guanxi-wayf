@@ -7,8 +7,6 @@
   
   <property file="build.properties" />
 
-  <!-- We need Guanxi::Common to build the WAYF. Get these from build.properties -->
-  <property name="guanxi-common.lib.dir" value="${guanxi-common.home}/dist/jar" />
   <property name="gx_lib.dir" value="${gx_lib.home}" />
 
   <!-- Source files -->
@@ -28,9 +26,6 @@
   <!-- CLASSPATH -->
   <path id="classpath">
     <fileset dir="${gx_lib.dir}">
-      <include name="**/*.jar" />
-    </fileset>
-    <fileset dir="${guanxi-common.lib.dir}">
       <include name="**/*.jar" />
     </fileset>
     <pathelement path="${servlet-api-jar}" />
@@ -104,17 +99,11 @@
 
     <!-- Required jars -->
     <copy todir="${webapp.dir}/WEB-INF/lib">
-      <fileset dir="${guanxi-common.lib.dir}"><include name="**/*.*"/></fileset>
       <fileset dir="${gx_lib.dir}/guanxi"><include name="**/*.*"/></fileset>
       <fileset dir="${gx_lib.dir}/xmlbeans"><include name="**/*.*"/></fileset>
     </copy>
   </target>
 
-  <!-- Builds the Guanxi components that the WAYF requires -->
-  <target name="buildDependencies">
-    <ant antfile="build.xml" dir="${guanxi-common.home}" target="all" inheritall="false" />
-  </target>
-
   <!-- Default target - builds everything -->
-  <target name="all" depends="clean,initDistDirs,buildDependencies,compile,copyClasspathFiles,webapp,jar" description="Builds everything into the distribution directory"/>
+  <target name="all" depends="clean,initDistDirs,compile,copyClasspathFiles,webapp,jar" description="Builds everything into the distribution directory"/>
 </project>
