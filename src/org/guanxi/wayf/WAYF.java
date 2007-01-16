@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.12  2007/01/16 11:44:33  alistairskye
+   Added getRequestParameters()
+
    Revision 1.11  2007/01/16 11:31:16  alistairskye
    Updated to use XMLBeans
 
@@ -51,7 +54,6 @@
 
 package org.guanxi.wayf;
 
-import org.guanxi.common.Utils;
 import org.guanxi.common.GuanxiException;
 import org.guanxi.xal.idp.IdpListDocument;
 import javax.servlet.http.HttpServlet;
@@ -92,7 +94,7 @@ public class WAYF extends HttpServlet {
         // ...and add on the Shibboleth specific parameters
         String name, value;
         boolean firstShibbParam = true;
-        Hashtable requestParams = Utils.getRequestParameters(request);
+        Hashtable requestParams = getRequestParameters(request);
         Enumeration e = requestParams.keys();
         while (e.hasMoreElements()) {
           // Get a parameter from the request
@@ -145,5 +147,19 @@ public class WAYF extends HttpServlet {
     }
 
     return sites;
+  }
+
+  public static Hashtable getRequestParameters(HttpServletRequest request) {
+    Hashtable params = new Hashtable();
+    Enumeration e = request.getParameterNames();
+    String name,value;
+
+    while (e.hasMoreElements()) {
+      name = (String)e.nextElement();
+      value = request.getParameter(name);
+      params.put(name, value);
+    }
+
+    return params;
   }
 }
