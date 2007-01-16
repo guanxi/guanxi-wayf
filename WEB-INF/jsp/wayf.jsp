@@ -53,7 +53,7 @@
     <input type="submit" name="submit" value="<%= msg.getString("ID_BUTTON_PROCEED")%>" />
       <%
         String name,value;
-        Hashtable shibbolethParams = org.guanxi.common.Utils.getRequestParameters(request);
+        Hashtable shibbolethParams = org.guanxi.wayf.WAYF.getRequestParameters(request);
         Enumeration e = shibbolethParams.keys();
         while (e.hasMoreElements()) {
           name = (String)e.nextElement();
