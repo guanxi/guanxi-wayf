@@ -45,7 +45,8 @@
 
   <!-- Compile -->
   <target name="compile" description="Compiles the classes">
-    <javac srcdir="${src.dir}" destdir="${classes.dir}" deprecation="on" debug="true">
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" deprecation="on"
+           source="${javac.source}" target="${javac.target}">
       <classpath refid="classpath"/>
     </javac>
     <copy todir="${classes.dir}/${xsd.dest.dir}">
