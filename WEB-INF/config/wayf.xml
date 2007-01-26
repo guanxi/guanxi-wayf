@@ -6,5 +6,5 @@
        name : The human readable name of the IdP
        url  : The URL of the IdP's SSO endpoint
   -->
-  <idp name="My Identity Provider" url="https://myidp.uni.ac.uk/SSO" />
+  <idp name="My Identity Provider" url="http://localhost/guanxi_idp/SSO" />
 </idp-list>
