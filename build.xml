@@ -86,7 +86,7 @@
   <target name="webapp" description="Builds a webapp tree">
     <!-- web.xml -->
     <copy todir="${webapp.dir}/WEB-INF">
-      <fileset dir="src/webapp/WEB-INF">
+      <fileset dir="src/main/webapp/WEB-INF">
         <include name="**/*.*"/>
       </fileset>
     </copy>
