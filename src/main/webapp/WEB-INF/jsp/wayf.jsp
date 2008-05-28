@@ -5,8 +5,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page autoFlush="false" buffer="20kb" %>
 <%
-  ResourceBundle msg = ResourceBundle.getBundle("messages.wayf_wayf", new Locale(request.getHeader("Accept-Language")));
-  ResourceBundle siteMsg = ResourceBundle.getBundle("messages.site", new Locale(request.getHeader("Accept-Language")));
+  ResourceBundle msg = ResourceBundle.getBundle("messages.wayf", new Locale(request.getHeader("Accept-Language")));
+  ResourceBundle siteMsg = ResourceBundle.getBundle("messages.common", new Locale(request.getHeader("Accept-Language")));
 %>
 <html>
   <head><title><%= msg.getString("ID_PAGE_TITLE")%></title>
@@ -67,7 +67,7 @@
       </div>
       </div>
      <div style="width:400px; margin: 0 auto;">
-       <div align="left"><strong>Guanxi@<%= siteMsg.getString("ID_INSTITUTION")%></strong></div>
+       <div align="left"><strong>Guanxi@<%= siteMsg.getString("institution.display.name")%></strong></div>
      </div>
   </body>
 </html>
