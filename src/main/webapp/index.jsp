@@ -2,8 +2,8 @@
 <%@ page import="java.util.ResourceBundle"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  ResourceBundle msg = ResourceBundle.getBundle("messages.wayf", new Locale(request.getHeader("Accept-Language")));
-  ResourceBundle siteMsg = ResourceBundle.getBundle("messages.common", new Locale(request.getHeader("Accept-Language")));
+  ResourceBundle msg = ResourceBundle.getBundle("messages.wayf", request.getLocale());
+  ResourceBundle siteMsg = ResourceBundle.getBundle("messages.common", request.getLocale());
 %>
 <html>
   <head><title><%= msg.getString("ID_PAGE_TITLE")%></title>
