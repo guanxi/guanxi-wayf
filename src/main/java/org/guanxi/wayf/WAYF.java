@@ -17,6 +17,12 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.2  2008/07/23 16:43:02  alistairskye
+   Merged from SEMANTICO branch
+
+   Revision 1.1.2.1  2008/07/17 10:45:15  matthewfranglen
+   Adding generic types where possible, suppressing warnings where not possible.
+
    Revision 1.1  2008/03/14 17:20:03  alistairskye
    Mavenised
 
@@ -78,6 +84,7 @@ import java.util.Enumeration;
  *
  * @author Alistair Young alistair@smo.uhi.ac.uk
  */
+@SuppressWarnings("serial")
 public class WAYF extends HttpServlet {
   public void init() throws ServletException {
     getServletContext().setAttribute("idpList", buildIDPList());
@@ -97,12 +104,12 @@ public class WAYF extends HttpServlet {
         // ...and add on the Shibboleth specific parameters
         String name, value;
         boolean firstShibbParam = true;
-        Hashtable requestParams = getRequestParameters(request);
-        Enumeration e = requestParams.keys();
+        Hashtable<String, String> requestParams = getRequestParameters(request);
+        Enumeration<String> e = requestParams.keys();
         while (e.hasMoreElements()) {
           // Get a parameter from the request
-          name = (String)e.nextElement();
-          value = (String)requestParams.get(name);
+          name = e.nextElement();
+          value = requestParams.get(name);
 
           // If it's a Shibboleth parameter, remove the marker the JSP added...
           if (name.indexOf("shibb_") != -1) {
@@ -127,8 +134,8 @@ public class WAYF extends HttpServlet {
     }
   }
 
-  private Hashtable buildIDPList() {
-    Hashtable sites = new Hashtable();
+  private Hashtable<String, String> buildIDPList() {
+    Hashtable<String, String> sites = new Hashtable<String, String>();
 
     // Build the path to the sites XML file...
     String sitesFile = getServletContext().getRealPath(getServletConfig().getInitParameter("sitesFile"));
@@ -151,13 +158,14 @@ public class WAYF extends HttpServlet {
     return sites;
   }
 
-  public static Hashtable getRequestParameters(HttpServletRequest request) {
-    Hashtable params = new Hashtable();
-    Enumeration e = request.getParameterNames();
+  @SuppressWarnings("unchecked")
+  public static Hashtable<String, String> getRequestParameters(HttpServletRequest request) {
+    Hashtable<String, String> params = new Hashtable<String, String>();
+    Enumeration<String> e = request.getParameterNames();
     String name,value;
 
     while (e.hasMoreElements()) {
-      name = (String)e.nextElement();
+      name = e.nextElement();
       value = request.getParameter(name);
       params.put(name, value);
     }
