@@ -1,0 +1,75 @@
+Guanxi::WAYF
+============
+This file provides information on what the Guanxi::WAYF is as well as 
+instructions on how to install and configure it.
+
+Contents
+--------
+1) What is Guanxi::WAYF?
+2) How do I install it?
+3) How do I configure it?
+4) Contributors
+
+What is Guanxi::WAYF?
+=====================
+Guanxi::WAYF is the WAYF component of the Guanxi IdP application. It stands 
+for "Where Are You From" and it provides functionality to accept initial 
+Shibboleth GET requests from a Service Provider, ask the user where they're 
+from and then route that request to the user's own Identity Provider.  To do 
+this, it displays a list of sites that the user can choose from.  
+
+How do I install it?
+====================
+Before you can build the WAYF, you must first obtain Guanxi::Common, 
+Guanxi::gx_lib and SAMUEL, all of which the WAYF uses. You can get binary or 
+source distributions of these components from the Guanxi sourceforge site. 
+If you are reading this, you've obviously got hold of the WAYF, uncompressed 
+the distribution and are now staring at a load of files:
+
+/resources      -- contains normally accessible JSP pages
+/src            -- the WAYF source
+/WEB-INF/config -- contains the WAYF's config file, wayf.xml
+/WEB-INF/jsp    -- contains JSP pages that are only invoked by a Shibboleth interaction
+/WEB-INF/lib    -- required jars for the WAYF
+
+Why are some JSPs, such as wayf.jsp not publicly accessible? Well, they're 
+not meant for human consumption.  At least, not until a Shibboleth compatible 
+Service Provider has invoked the WAYF service and the IdP list is configured. 
+A normal user accessing wayf.jsp would not have the required Shibboleth 
+request parameters so would start an empty request to an IdP.
+
+To build the WAYF, find the file build.properties in the root folder of the 
+distribution and change the paths accordingly:
+
+build.properties:
+guanxi-common.home=../Common
+samuel.home=../../samuel
+gx_lib.home=../../gx_lib
+
+You'll have to tell the build where your servlet environment is:
+servlet-api-jar=/usr/local/tomcat/common/lib/servlet-api.jar
+
+then just type:
+ant
+
+and the WAYF will be built to:
+/dist/webapp
+
+To install the WAYF, copy everything in /dist/webapp to whereever you want 
+to deploy it, e.g. /usr/local/tomcat/webapps/WAYF.
+
+How do I configure it?
+======================
+Once you've got the WAYF installed, you must give it a list of IdPs to display.
+You do this by editing WEB-INF/config/wayf.xml:
+<idp name="UHI Millennium Institute" url="https://shorigin.uhi.ac.uk/SSO" />
+The "name" element is displayed to the user, while the "url" element is used 
+to route the Shibboleth GET request to the correct IdP.
+
+Contributors
+============
+Alistair Young Lead developer alistair@smo.uhi.ac.uk
+Antony Corfield antony@smo.uhi.ac.uk
+Sean Mehan sean@smo.uhi.ac.uk
+
+

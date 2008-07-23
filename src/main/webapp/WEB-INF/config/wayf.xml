@@ -1,0 +1,10 @@
+<idp-list xmlns="urn:guanxi:idp">
+  <!-- This is the list of Identity Providers (IdPs)
+       we know about. For each IdP, you should provide the
+       following information:
+
+       name : The human readable name of the IdP
+       url  : The URL of the IdP's SSO endpoint
+  -->
+  <idp name="My Identity Provider" url="http://localhost/guanxi_idp/SSO" />
+</idp-list>
