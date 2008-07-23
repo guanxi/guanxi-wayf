@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>Guanxi WAYF Documentation</title>
+      <style type="text/css">
+        <!--
+        body {
+          background-color: #FFFFFF;
+          margin-left: 20px;
+          margin-top: 20px;
+          margin-right: 20px;
+          margin-bottom: 20px;
+          font-family:Verdana, Arial, Helvetica, sans-serif;
+          background-image: url(../../images/watermark.gif);
+        }
+        -->
+      </style>
+  </head>
+
+<body>
+<h1>Guanxi::WAYF
+</h1>
+<p>This document describes how to get hold of the Guanxi WAYF, in binary form or build it from source and configure it.</p>
+<p><strong>Last updated for WAYF v1.2.5</strong></p>
+<p>Contents<br>
+  o <a href="#1">What is the WAYF?</a><br>
+  o <a href="#2">Getting a binary distribution</a><br>
+  o <a href="#3">Building from source</a><br>
+  o <a href="#4">Installation</a><br>
+  o <a href="#5">Configuration</a><br>
+  o <a href="#6">More information </a><br>
+  </p>
+<h2><a name="1"></a>What is the WAYF?</h2>
+<p>  The WAYF is the component that asks you &quot;Where Are You From?&quot;. It's a way for a Service Provider to find out, from you, where to send Shibboleth requests to get you authenticated and then to get attributes about you, to help it make a decision on whether you should be allowed to access a resource.</p>
+<h2><a name="2"></a>Getting a binary distribution</h2>
+<p>  You can get a binary distribution, i.e. you don't have to build from source, from the Guanxi sourceforge site:<br>
+  http://sourceforge.net/projects/guanxi<br>
+  Click on the &quot;Download Guanxi&quot; button and then click on &quot;guanxi&quot; Package under Latest File Releases. You'll now see a list of the Guanxi components available for download.<br>
+  Click on the guanxi-wayf-bin-xxx.tar.gz file, where xxx will be the latest version number of the WAYF binary release.<br>
+  Choose your mirror and the Guanxi WAYF will be downloaded to your computer.<br>
+  Uncompress the file and jump over the next section, to the installation notes.</p>
+<h2><a name="3"></a>Building from source</h2>
+<p>  You can get the Guanxi source distribution from the Guanxi sourceforge CVS server. In a command shell, you should<br>
+  enter the following commands:</p>
+<p>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/guanxi login<br>
+  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/guanxi co -P guanxi</p>
+<p>when prompted for a password, just hit the enter key. You don't need one for anonymous access.</p>
+<p>This will create a directory named guanxi, which has the following structure:</p>
+<p>guanxi<br>
+  -- CVS : CVS information. This is only for versioning and is not used by the guanxi source code.<br>
+  -- Common : The Guanxi Common module. This provides functionality that the other modules make use of.<br>
+  -- Core : The Guanxi Core module. This contains localised strings and XML schema files.<br>
+  -- IdP : The Guanxi Identity Provider.<br>
+  -- SP : The Guanxi Service Provider.<br>
+  -- WAYF : The Guanxi WAYF.<br>
+  -- gx_lib : This directory contains all the JAR files required by the Guanxi modules. It's included as a convenience.<br>
+  -- samuel : The Guanxi SAML toolkit.</p>
+<p>To build the WAYF from source, change to the Core directory and enter the command:</p>
+<p>ant wayf</p>
+<p>This will build the WAY and put the files in guanxi/WAYF/dist/webapp.</p>
+<h2><a name="4"></a>Installation</h2>
+<p>  Once you've either downloaded the binary distribution or built the WAYF from source, you should copy the files, from either the binary directory or guanxi/WAYF/dist/webapp to your servlet container's webapp root directory. The example uses:</p>
+<p>/WWW/guanxi_wayf</p>
+<p>Restart your servlet container and point your browser to:</p>
+<p>http://localhost/guanxi_wayf</p>
+<p>replacing &quot;localhost&quot; with your server's host name if appropriate. You should see the Guanxi WAYF page with a description of the WAYF. Note that you won't see a list of Identity Providers from this page. The IdP list is only meaningful in a Shibboleth session so you'll only see it when the WAYF is contacted by a Service Provider.</p>
+<h2><a name="5"></a>Configuration</h2>
+<p>  It's easy to configure the WAYF as it only needs to know the names and addresses of Identity Providers. All you have to do is modify the file:</p>
+<p>WEB-INF/config/wayf.xml</p>
+<p>adding the names and addresses of Identity Providers. There's an example provided for you to modify:</p>
+<p>&lt;idp-list xmlns=&quot;urn:guanxi:idp&quot;&gt;<br>
+&nbsp;&nbsp;&lt;idp name=&quot;My Identity Provider&quot; url=&quot;https://myidp.uni.ac.uk/SSO&quot; /&gt;<br>
+&lt;/idp-list&gt;</p>
+<p>change &quot;name&quot; and &quot;url&quot; to point to your Identity Provider:</p>
+<p>&lt;idp-list xmlns=&quot;urn:guanxi:idp&quot;&gt;<br>
+&nbsp;&nbsp;&lt;idp name=&quot;University Identity Provider&quot; url=&quot;https://idp.uni.ac.uk/SSO&quot; /&gt;<br>
+&lt;/idp-list&gt;</p>
+<p>The &quot;name&quot; attribute as the human readable name of the Identity Provider. Users will be able to choose this from a list displayed by the WAYF. The &quot;url&quot; attribute is the URL of the Identity Provider's Single Sign-On (SSO) endpoint, i.e. the Shibboleth SSO endpoint where a user will be authenticated.</p>
+<p>When you've modified your wayf.xml, adding a new &lt;idp&gt; element for each Identity Provider you wish to display, restart your servlet container and you're ready to start using the WAYF.</p>
+<h2><a name="6"></a>More information</h2>
+<p>  If you have any comments, ideas or suggestions, drop us a note on the Guanxi mailing list, which you can join at the Guanxi sourceforge site:</p>
+<p><a href="http://sourceforge.net/projects/guanxi">http://sourceforge.net/projects/guanxi</a></p>
+<p>Alternatively you can read more documentation and post comments on the Guanxi Wiki:</p>
+<p><a href="http://guanxi.uhi.ac.uk/xwiki">http://guanxi.uhi.ac.uk/xwiki</a></p>
+<p>or catch up with the latest Guanxi development gossip on the Guanxi blog:</p>
+<p><a href="http://www.weblogs.uhi.ac.uk/sm00ay/index.php?cat=2">http://www.weblogs.uhi.ac.uk/sm00ay/index.php?cat=2</a></p>
+</body>
+</html>
