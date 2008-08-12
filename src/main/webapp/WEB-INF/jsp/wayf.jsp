@@ -1,7 +1,9 @@
-<%@ page import="java.util.Hashtable,
-                 java.util.Enumeration"%>
-<%@ page import="java.util.Locale"%>
-<%@ page import="java.util.ResourceBundle"%>
+<%@ page import="java.util.Map,
+                 java.util.Enumeration,
+                 java.util.Locale,
+                 java.util.ResourceBundle,
+                 org.guanxi.wayf.WAYF,
+                 org.guanxi.wayf.Util" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page autoFlush="false" buffer="20kb" %>
 <%
@@ -25,49 +27,51 @@
     </style>
   </head>
   <body>
- <div style="width:167; height:91; margin: 0 auto; background-image:url(images/logo.gif);"></div>
- <br>
+    <div style="width:167; height:91; margin: 0 auto; background-image:url(images/logo.gif);"></div>
+    <br>
 
- <div style="margin: 0 auto; text-align: center; width:400px; height:80px;">
-  <%= msg.getString("ID_CHOOSE_INSTITUTION")%>
- </div>
+    <div style="margin: 0 auto; text-align: center; width:400px; height:80px;">
+      <%= msg.getString("ID_CHOOSE_INSTITUTION")%>
+    </div>
 
-  <div style="border:1px solid black; width:400px; height:65; background-image:url(images/formback.gif); background-repeat:repeat-x repeat-y; margin: 0 auto; text-align: center;">
-  <div style="padding:20px; margin: 0 auto;">
-  <form name="wayfForm" method="GET" action="WAYF">
-    <select name="idp">
-    <%
-      String idpName, idpURL;
-      Hashtable sites = (Hashtable)application.getAttribute("idpList");
-      Enumeration sitesList = sites.keys();
-      while (sitesList.hasMoreElements()) {
-        idpName = (String)sitesList.nextElement();
-        idpURL = (String)sites.get(idpName);
-        %>
-        <option value="<%= idpURL %>"><%= idpName %></option>
-        <%
-      }
-    %>
-    </select>
-    <input type="submit" name="submit" value="<%= msg.getString("ID_BUTTON_PROCEED")%>" />
-      <%
-        String name,value;
-        Hashtable shibbolethParams = org.guanxi.wayf.WAYF.getRequestParameters(request);
-        Enumeration e = shibbolethParams.keys();
-        while (e.hasMoreElements()) {
-          name = (String)e.nextElement();
-          value = (String)shibbolethParams.get(name);
-          %>
-          <input type="hidden" name="shibb_<%= name %>" value="<%= value %>" />
+    <div style="border:1px solid black; width:400px; height:65; background-image:url(images/formback.gif); background-repeat:repeat-x repeat-y; margin: 0 auto; text-align: center;">
+      <div style="padding:20px; margin: 0 auto;">
+        <form name="wayfForm" method="POST" action="WAYF">
+          <select name="<%= WAYF.idpKey %>">
+            <%
+              String idpURL;
+              Map<String, String> sites;
+                
+              sites = (Map<String, String>)application.getAttribute(Util.idpListKey);
+                
+              for ( String idpName : sites.keySet() ) {
+                idpURL = sites.get(idpName);
+                %>
+                <option value="<%= idpURL %>"><%= idpName %></option>
+                <%
+              }
+            %>
+          </select>
+          <input type="submit" name="submit" value="<%= msg.getString("ID_BUTTON_PROCEED")%>" />
           <%
-        }
-      %>
-        <input type="hidden" name="mode" value="dispatch" />
-      </form>
+            Map<String, String[]> requestParameters;
+          
+            requestParameters = request.getParameterMap();
+                  
+            for ( String key : requestParameters.keySet() ) {
+              
+              for ( String value : requestParameters.get( key ) ) {
+                %>
+                <input type="hidden" name="<%= WAYF.parameterPrefix + key %>" value="<%= value %>" />
+                <%
+              }
+            }
+          %>
+        </form>
       </div>
-      </div>
-     <div style="width:400px; margin: 0 auto;">
-       <div align="left"><strong>Guanxi@<%= siteMsg.getString("institution.display.name")%></strong></div>
-     </div>
+    </div>
+    <div style="width:400px; margin: 0 auto;">
+      <div align="left"><strong>Guanxi@<%= siteMsg.getString("institution.display.name")%></strong></div>
+    </div>
   </body>
 </html>

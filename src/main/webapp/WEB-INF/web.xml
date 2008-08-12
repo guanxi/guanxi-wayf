@@ -20,4 +20,21 @@
     <servlet-name>WAYF</servlet-name>
     <url-pattern>/WAYF</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<display-name>Guanxi DS Service</display-name>
+    <servlet-name>DS</servlet-name>
+    <servlet-class>org.guanxi.wayf.DS</servlet-class>
+
+    <!-- Where the sites file is stored -->
+    <init-param>
+      <param-name>sitesFile</param-name>
+      <param-value>/WEB-INF/config/wayf.xml</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DS</servlet-name>
+    <url-pattern>/DS</url-pattern>
+  </servlet-mapping>
 </web-app>

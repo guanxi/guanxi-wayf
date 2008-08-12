@@ -17,6 +17,18 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.1.2.2  2008/08/12 14:25:34  matthewfranglen
+   This change to the WAYF does the following things:
+
+   1) Supports multiple parameters with the same key in the get / post.
+
+   2) Adds DS functionality using a new mapping. This can automatically forward the user to an appropriate idp based upon parameters passed to the initial request. While the functionality of this appears simple the idea is to create URLs that are provided to students of a given university. Those URLs will automatically forward said students to the IdP of the university. The coding has been done in a fairly expandable way so it should be easy to add other DS functionality.
+
+   3) Removes all hardcoded values with references to final variables holding the hardcoded values. This should reduce the chance of error should those values have to change.
+
+
+   Alistair before integrating this with the trunk you should review the changes and be sure they are what you want.
+
    Revision 1.1.2.1  2008/07/17 10:45:15  matthewfranglen
    Adding generic types where possible, suppressing warnings where not possible.
 
@@ -66,15 +78,13 @@
 
 package org.guanxi.wayf;
 
-import org.guanxi.xal.idp.IdpListDocument;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
-import java.io.IOException;
-import java.io.File;
-import java.util.Hashtable;
-import java.util.Enumeration;
 
 /**
  * <p>WAYF</p>
@@ -83,90 +93,76 @@ import java.util.Enumeration;
  */
 @SuppressWarnings("serial")
 public class WAYF extends HttpServlet {
+  /**
+   * This is the parameter key for the URL of the selected
+   * IdP.
+   */
+  public static final String idpKey          = "idp";
+  /**
+   * This is the prefix that is appended to the parameters to
+   * ensure that they do not conflict with the ones that are
+   * added by the WAYF.
+   */
+  public static final String parameterPrefix = "shibb_";
+  
+  /**
+   * This will initialise the IdP list for the WAYF.
+   * 
+   * @throws ServletException   If there is a problem loading the IdP list.
+   */
   public void init() throws ServletException {
-    getServletContext().setAttribute("idpList", buildIDPList());
+    Util.init(getServletContext(), getServletConfig());
   }
 
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    doGet(request, response);
-  }
-
+  /**
+   * This handles a get request to this Servlet. Considering that the form used
+   * to select the IdP uses a post this method can be assumed to be restricted
+   * to visitors to the WAYF that have yet to select an IdP.
+   */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    // Are we getting a form submission from the WAYF list?
-    if (request.getParameter("mode") != null) {
-      if (request.getParameter("mode").equalsIgnoreCase("dispatch")) {
-        // Base IdP URL...
-        String idpURL = request.getParameter("idp");
-        
-        // ...and add on the Shibboleth specific parameters
-        String name, value;
-        boolean firstShibbParam = true;
-        Hashtable<String, String> requestParams = getRequestParameters(request);
-        Enumeration<String> e = requestParams.keys();
-        while (e.hasMoreElements()) {
-          // Get a parameter from the request
-          name = e.nextElement();
-          value = requestParams.get(name);
-
-          // If it's a Shibboleth parameter, remove the marker the JSP added...
-          if (name.indexOf("shibb_") != -1) {
-            name = name.replaceAll("shibb_", "");
-
-            // ...and add it to the IdP's URL
-            if (firstShibbParam) {
-              idpURL += "?";
-              firstShibbParam = false;
-            }
-            else
-              idpURL += "&";
-            idpURL += name + "=" + value;
-          }
-        }
-        response.sendRedirect(idpURL);
-      }
-    }
-    else {
-      // Initial forward to the WAYF page from a Shibboleth SP GET request
-      request.getRequestDispatcher("/WEB-INF/jsp/wayf.jsp").forward(request, response);
-    }
+    // Initial forward to the WAYF page from a Shibboleth SP GET request
+    request.getRequestDispatcher("/WEB-INF/jsp/wayf.jsp").forward(request, response);
   }
 
-  private Hashtable<String, String> buildIDPList() {
-    Hashtable<String, String> sites = new Hashtable<String, String>();
-
-    // Build the path to the sites XML file...
-    String sitesFile = getServletContext().getRealPath(getServletConfig().getInitParameter("sitesFile"));
-
-    try {
-      // Load the config file...
-      IdpListDocument idpListDoc = IdpListDocument.Factory.parse(new File(sitesFile));
-      IdpListDocument.IdpList idpList = idpListDoc.getIdpList();
-
-      // ...and build up the list of IdPs we recognise
-      for (int count = 0; count < idpList.getIdpArray().length; count++) {
-        org.guanxi.xal.idp.WAYF wayf = idpList.getIdpArray(count);
-        sites.put(wayf.getName(), wayf.getUrl());
-      }
-    }
-    catch(Exception e) {
-      sites.put("error", e.getMessage());
-    }
-
-    return sites;
-  }
-
+  /**
+   * This handles post requests to this Servlet. The posts are handled exactly the
+   * same as the gets, although the mere fact that this is a post could be used
+   * to assume that the IdP has been selected.
+   */
   @SuppressWarnings("unchecked")
-  public static Hashtable<String, String> getRequestParameters(HttpServletRequest request) {
-    Hashtable<String, String> params = new Hashtable<String, String>();
-    Enumeration<String> e = request.getParameterNames();
-    String name,value;
-
-    while (e.hasMoreElements()) {
-      name = e.nextElement();
-      value = request.getParameter(name);
-      params.put(name, value);
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    Map<String, String[]> requestParameters;
+    String[] idpURLList;
+    String idpURL;
+    StringBuilder idpParameters;
+    
+    requestParameters = request.getParameterMap();
+    idpURLList        = requestParameters.get(idpKey);
+    
+    if ( idpURLList == null ) {
+      // if there is no URL to redirect to then the user
+      // must submit the form again.
+      doGet(request, response);
+      
+      return;
     }
+    idpURL = idpURLList[0];
+    
+    idpParameters = new StringBuilder();
+    for ( String key : requestParameters.keySet() ) {
+      if ( key.startsWith(parameterPrefix) ) {
+        String originalKey;
 
-    return params;
+        originalKey = key.substring(parameterPrefix.length());
+        
+        for ( String value : requestParameters.get(key) ) {
+          idpParameters.append( idpParameters.length() == 0 ? "?" : "&" );
+          idpParameters.append(originalKey).append("=").append(value);
+        }
+      }
+    }
+    
+    idpURL += idpParameters.toString();
+    response.sendRedirect(idpURL);
   }
 }
