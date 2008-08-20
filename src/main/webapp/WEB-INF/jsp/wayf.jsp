@@ -2,8 +2,11 @@
                  java.util.Enumeration,
                  java.util.Locale,
                  java.util.ResourceBundle,
+                 java.util.SortedSet,
                  org.guanxi.wayf.WAYF,
-                 org.guanxi.wayf.Util" %>
+                 org.guanxi.wayf.Util,
+                 org.guanxi.wayf.metadata.IdPMetadata,
+                 org.guanxi.wayf.metadata.MetadataManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page autoFlush="false" buffer="20kb" %>
 <%
@@ -39,16 +42,13 @@
         <form name="wayfForm" method="POST" action="WAYF">
           <select name="<%= WAYF.idpKey %>">
             <%
-              String idpURL;
-              Map<String, String> sites;
-                
-              sites = (Map<String, String>)application.getAttribute(Util.idpListKey);
-                
-              for ( String idpName : sites.keySet() ) {
-                idpURL = sites.get(idpName);
+              SortedSet<? extends IdPMetadata> sites;
+            
+              sites = MetadataManager.getMetadataManager().getMetadata();
+              for ( IdPMetadata current : sites ) {
                 %>
-                <option value="<%= idpURL %>"><%= idpName %></option>
-                <%
+				<option value="<%= current.getUrl() %>"><%= current.getName() %></option>
+				<%
               }
             %>
           </select>

@@ -25,6 +25,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.guanxi.wayf.metadata.IdPMetadata;
+import org.guanxi.wayf.metadata.MetadataManager;
+
 /**
  * DS
  * 
@@ -104,9 +107,12 @@ public class DS extends HttpServlet {
       
       if ( idpNameList != null ) {
         for ( String idpName : idpNameList ) {
-          idpURL = ((Map<String, String>)getServletContext().getAttribute(Util.idpListKey)).get(idpName);
+          IdPMetadata metadata;
           
-          if ( idpURL != null ) {
+          metadata = MetadataManager.getMetadataManager().getMetadataByName(idpName);
+          
+          if ( metadata != null ) {
+            idpURL = metadata.getUrl();
             break;
           }
         }

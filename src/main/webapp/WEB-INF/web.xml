@@ -14,6 +14,11 @@
       <param-name>sitesFile</param-name>
       <param-value>/WEB-INF/config/wayf.xml</param-value>
     </init-param>
+    <!-- The metadata manager to use -->
+    <init-param>
+      <param-name>metadataManager</param-name>
+      <param-value>file</param-value>
+    </init-param>
   </servlet>
 
   <servlet-mapping>
@@ -30,6 +35,11 @@
     <init-param>
       <param-name>sitesFile</param-name>
       <param-value>/WEB-INF/config/wayf.xml</param-value>
+    </init-param>
+    <!-- The metadata manager to use -->
+    <init-param>
+      <param-name>metadataManager</param-name>
+      <param-value>file</param-value>
     </init-param>
   </servlet>
 
