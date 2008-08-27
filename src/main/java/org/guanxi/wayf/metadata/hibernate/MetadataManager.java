@@ -78,6 +78,7 @@ public class MetadataManager extends org.guanxi.wayf.metadata.MetadataManager {
    * 
    * @return  An alphabetically sorted list of IdPs.
    */
+  @SuppressWarnings("unchecked")
   public SortedSet<IdPMetadata> getMetadata() {
     Session                session;
     List<IdPMetadata>      idpList;
@@ -110,7 +111,7 @@ public class MetadataManager extends org.guanxi.wayf.metadata.MetadataManager {
     session.beginTransaction();
     
     metadata = (IdPMetadata)session
-               .createQuery("select i from Person i where i.name = :name")
+               .createQuery("select i from IdPMetadata i where i.name = :name")
                .setParameter("name", name)
                .uniqueResult();
     
