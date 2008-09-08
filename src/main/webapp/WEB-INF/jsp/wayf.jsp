@@ -4,9 +4,9 @@
                  java.util.ResourceBundle,
                  java.util.SortedSet,
                  org.guanxi.wayf.WAYF,
-                 org.guanxi.wayf.Util,
                  org.guanxi.wayf.metadata.IdPMetadata,
-                 org.guanxi.wayf.metadata.MetadataManager" %>
+                 org.guanxi.wayf.metadata.MetadataManager,
+                 org.guanxi.wayf.job.hibernate.HibernateMetadataLoader" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page autoFlush="false" buffer="20kb" %>
 <%
@@ -42,12 +42,12 @@
         <form name="wayfForm" method="POST" action="WAYF">
           <select name="<%= WAYF.idpKey %>">
             <%
-              SortedSet<? extends IdPMetadata> sites;
+              SortedSet<IdPMetadata> sites;
             
               sites = MetadataManager.getMetadataManager().getMetadata();
               for ( IdPMetadata current : sites ) {
                 %>
-				<option value="<%= current.getUrl() %>"><%= current.getName() %></option>
+				<option value="<%= current.getSsoURL() %>"><%= current.getName() %></option>
 				<%
               }
             %>
@@ -71,7 +71,7 @@
       </div>
     </div>
     <div style="width:400px; margin: 0 auto;">
-      <div align="left"><strong>Guanxi@<%= siteMsg.getString("institution.display.name")%></strong></div>
+      <div align="left"><strong><%= siteMsg.getString("institution.display.name")%></strong></div>
     </div>
   </body>
 </html>

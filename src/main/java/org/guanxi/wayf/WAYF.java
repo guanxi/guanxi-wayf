@@ -17,6 +17,9 @@
 /* CVS Header
    $Id$
    $Log$
+   Revision 1.1.2.3  2008/09/08 14:46:07  matthewfranglen
+   This makes the WAYF support quartz jobs and adds a file job that will load the list of IdPs from the configuration file.
+
    Revision 1.1.2.2  2008/08/12 14:25:34  matthewfranglen
    This change to the WAYF does the following things:
 
@@ -111,7 +114,6 @@ public class WAYF extends HttpServlet {
    * @throws ServletException   If there is a problem loading the IdP list.
    */
   public void init() throws ServletException {
-    Util.init(getServletContext(), getServletConfig());
   }
 
   /**

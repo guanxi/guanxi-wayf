@@ -3,35 +3,53 @@
  */
 package org.guanxi.wayf.metadata;
 
-import java.util.Comparator;
-
 /**
- * This represents a single IdP entry in the WAYF list.
- * 
  * @author matthew
+ *
  */
-public interface IdPMetadata {
+public class IdPMetadata {
+  /**
+   * This is the name that will be displayed on the drop down list
+   */
+  private String name;
+  /**
+   * This is the URL which the user will be redirected to upon selecting
+   * the idp.
+   */
+  private String ssoURL;
+  
+  public IdPMetadata(String name, String ssoURL) {
+    this.name   = name;
+    this.ssoURL = ssoURL;
+  }
 
+  public IdPMetadata() {}
+  
   /**
    * @return the name
    */
-  public String getName();
-  
+  public String getName() {
+    return name;
+  }
+
   /**
-   * @return the url
+   * @param name the name to set
    */
-  public String getUrl();
-  
+  public void setName(String name) {
+    this.name = name;
+  }
+
   /**
-   * This comparator allows the IdPMetadata elements to be ordered
-   * so that the displayed list is alphabetically sorted and is thus
-   * usable when the number of IdPs grows.
-   * 
-   * @author matthew
+   * @return the ssoURL
    */
-  public static class IdPMetadataComparator implements Comparator<IdPMetadata> {
-    public int compare(IdPMetadata one, IdPMetadata two) {
-      return one.getName().compareTo(two.getName());
-    }
+  public String getSsoURL() {
+    return ssoURL;
+  }
+
+  /**
+   * @param ssoURL the ssoURL to set
+   */
+  public void setSsoURL(String ssoURL) {
+    this.ssoURL = ssoURL;
   }
 }

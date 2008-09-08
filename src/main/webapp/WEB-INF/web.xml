@@ -47,4 +47,17 @@
     <servlet-name>DS</servlet-name>
     <url-pattern>/DS</url-pattern>
   </servlet-mapping>
+  
+  <!-- Default is /WEB-INF/applicationContext.xml -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      /WEB-INF/config/spring/application/jobs/*.xml
+      /WEB-INF/config/spring/application/bootstrap.xml
+    </param-value>
+  </context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 </web-app>

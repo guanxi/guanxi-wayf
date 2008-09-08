@@ -64,7 +64,6 @@ public class DS extends HttpServlet {
    * @throws ServletException   If there is a problem loading the IdP list.
    */
   public void init() throws ServletException {
-    Util.init(getServletContext(), getServletConfig());
   }
 
   /**
@@ -109,10 +108,10 @@ public class DS extends HttpServlet {
         for ( String idpName : idpNameList ) {
           IdPMetadata metadata;
           
-          metadata = MetadataManager.getMetadataManager().getMetadataByName(idpName);
+          metadata = MetadataManager.getMetadataManager().getMetadata(idpName);
           
           if ( metadata != null ) {
-            idpURL = metadata.getUrl();
+            idpURL = metadata.getSsoURL();
             break;
           }
         }

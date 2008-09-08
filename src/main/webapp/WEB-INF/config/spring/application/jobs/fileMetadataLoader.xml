@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/context
+						   http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+  <!--
+         cronLine format:
+           1 2 3 4 5 6 7
+            1 = seconds (0-59)
+            2 = minutes (0-59)
+            3 = hours (0-23)
+            4 = day of month (1-31)
+            5 = month (1-12 or JAN-DEC)
+            6 = day of week (1-7 or SUN-SAT)
+            7 = year (1970-2099)
+
+          cronLine wildcards:
+            * = any value
+            ? = no specific value
+
+          cronLine examples:
+            10 * * * * ? start after 10 seconds, run every minute, every hour, every day, every month
+            0/10 * 10,11,12 * * ? start immediately, repeat every 10 seconds, every minute,
+                                  for hours 10,11,12 only, every day, every month
+            0 0 12 * * ? start at 12pm (noon) every day
+
+            There's a guide to cron formats here:
+            http://www.opensymphony.com/quartz/wikidocs/CronTriggers%20Tutorial.html
+  -->
+  
+	<bean id="fileMetadataLoaderTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" 		ref="fileMetadataLoaderJobDetail"/>
+		<property name="cronExpression" value="0 0 * * * ?" /> <!-- once per hour -->
+	</bean>
+  
+  	<bean id="fileMetadataLoaderJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<property name="targetObject" ref="fileMetadataLoader" />
+  		<property name="targetMethod" value="run" />
+	</bean>
+	
+	<!-- init method makes it run at startup -->
+	<bean id="fileMetadataLoader" class="org.guanxi.wayf.job.file.FileMetadataLoader" init-method="run">
+		<property name="metadataFile" value="/WEB-INF/config/wayf.xml"/>
+	</bean>
+
+</beans>
