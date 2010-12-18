@@ -14,58 +14,6 @@
 //: Portions created by SMO WWW Development Group are Copyright (C) 2005 SMO WWW Development Group.
 //: All Rights Reserved.
 //:
-/* CVS Header
-   $Id$
-   $Log$
-   Revision 1.2  2008/07/23 16:43:02  alistairskye
-   Merged from SEMANTICO branch
-
-   Revision 1.1.2.1  2008/07/17 10:45:15  matthewfranglen
-   Adding generic types where possible, suppressing warnings where not possible.
-
-   Revision 1.1  2008/03/14 17:20:03  alistairskye
-   Mavenised
-
-   Revision 1.14  2007/01/16 11:48:18  alistairskye
-   Tidied up
-
-   Revision 1.13  2007/01/16 11:47:53  alistairskye
-   Updated buildIDPList() to remove GuanxiException
-
-   Revision 1.12  2007/01/16 11:44:33  alistairskye
-   Added getRequestParameters()
-
-   Revision 1.11  2007/01/16 11:31:16  alistairskye
-   Updated to use XMLBeans
-
-   Revision 1.10  2005/07/19 14:21:33  alistairskye
-   Modified buildIDPList() to use new namespace aware org.guanxi.samuel.utils.XUtils
-
-   Revision 1.9  2005/07/11 12:05:56  alistairskye
-   Package restructure
-
-   Revision 1.8  2005/06/20 11:16:51  alistairskye
-   Removed org.Guanxi.SAMUEL.Exception.ParseException
-
-   Revision 1.7  2005/06/10 10:39:05  alistairskye
-   Modified buildIDPList to use ParserPoolException
-
-   Revision 1.6  2005/05/23 11:38:38  alistairskye
-   Changed buildIDPList to look for idp nodes
-
-   Revision 1.5  2005/05/23 08:41:04  alistairskye
-   Updated buildIDPList() to fix idp-list display bug
-
-   Revision 1.4  2005/05/04 13:16:36  alistairskye
-   Changed to use org.Guanxi.SAMUEL.Exception package
-
-   Revision 1.3  2005/05/02 10:58:13  alistairskye
-   Changed to use latest version of org.Guanxi.SAMUEL.Utils.XUtils.getIterator()
-
-   Revision 1.2  2005/04/15 10:05:56  alistairskye
-   License updated
-
-*/
 
 package org.guanxi.wayf;
 
